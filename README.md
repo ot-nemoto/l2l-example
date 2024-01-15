@@ -13,11 +13,6 @@ sam --version
 
 ## Deploy
 
-|Parameter|Type|Description|Default|
-|--|--|--|--|
-|SecurityGroupIds|String|セキュリティグループID<br>複数の場合はカンマ区切り<br>SecurityGroupIdsを指定する場合は。SubnetIdsの指定も必須|-|
-|SubnetIds|String|サブネットID<br>複数の場合はカンマ区切り<br>SubnetIdsを指定する場合は。SecurityGroupIdsの指定も必須|-|
-
 ### invokee-app
 
 ```sh
@@ -30,6 +25,13 @@ sam deploy \
                         SubnetIds=SUBNET_IDS
 ```
 
+**Parameters**
+
+|Parameter|Type|Description|Default|
+|--|--|--|--|
+|SecurityGroupIds|String|セキュリティグループID<br>複数の場合はカンマ区切り<br>SecurityGroupIdsを指定する場合は。SubnetIdsの指定も必須|-|
+|SubnetIds|String|サブネットID<br>複数の場合はカンマ区切り<br>SubnetIdsを指定する場合は。SecurityGroupIdsの指定も必須|-|
+
 ### invoker-app
 
 ```sh
@@ -41,3 +43,11 @@ sam deploy \
   --parameter-overrides SecurityGroupIds=SECURITY_GROUP_IDS \
                         SubnetIds=SUBNET_IDS
 ```
+
+**Parameters**
+
+|Parameter|Type|Description|Default|
+|--|--|--|--|
+|SecurityGroupIds|String|セキュリティグループID<br>複数の場合はカンマ区切り<br>SecurityGroupIdsを指定する場合は。SubnetIdsの指定も必須|-|
+|SubnetIds|String|サブネットID<br>複数の場合はカンマ区切り<br>SubnetIdsを指定する場合は。SecurityGroupIdsの指定も必須|-|
+|InvokeeEndpointUrl|String|invokee-appのエンドポイントURL|-|

@@ -12,6 +12,9 @@ Parameters:
   SubnetIds:
     Type: String
     Default: ''
+  InvokeeEndpointUrl:
+    Type: String
+    Default: ''
 
 Conditions:
   UseVpcConfig:
@@ -39,6 +42,9 @@ Resources:
         - SecurityGroupIds: !Split [ ',', !Ref SecurityGroupIds ]
           SubnetIds: !Split [ ',', !Ref SubnetIds ]
         - !Ref AWS::NoValue
+      Environment:
+        Variables:
+          INVOKEE_ENDPOINT_URL: !Ref InvokeeEndpointUrl
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
