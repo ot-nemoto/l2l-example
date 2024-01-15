@@ -41,7 +41,8 @@ sam build
 
 sam deploy \
   --parameter-overrides SecurityGroupIds=SECURITY_GROUP_IDS \
-                        SubnetIds=SUBNET_IDS
+                        SubnetIds=SUBNET_IDS \
+                        InvokeeEndpointUrl=INVOKEE_ENDPOINT_URL
 ```
 
 **Parameters**
