@@ -44,7 +44,7 @@ Resources:
   InvokerFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
+      CodeUri: invoker/
       Handler: app.lambda_handler
       Runtime: python3.10
       Architectures:
@@ -59,17 +59,17 @@ Resources:
         Variables:
           INVOKEE_ENDPOINT_URL: !Ref InvokeeEndpointUrl
       Events:
-        HelloWorld:
+        Index:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
+            Path: /
             Method: get
             RestApiId: !Ref InvokerApi
 
 Outputs:
   InvokerApiUrl:
     Description: "API Gateway endpoint URL"
-    Value: !Sub "https://${InvokerApi}.execute-api.${AWS::Region}.amazonaws.com/${Env}/hello/"
+    Value: !Sub "https://${InvokerApi}.execute-api.${AWS::Region}.amazonaws.com/${Env}/"
   InvokerFunctionArn:
     Description: "Lambda Function ARN"
     Value: !GetAtt InvokerFunction.Arn
