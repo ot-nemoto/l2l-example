@@ -6,6 +6,12 @@ Description: >
   Sample SAM Template for invoker-app
 
 Parameters:
+  Env:
+    Type: String
+    AllowedValues:
+    - production
+    - staging
+    Default: staging
   SecurityGroupIds:
     Type: String
     Default: ''
@@ -28,7 +34,14 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
+  InvokerApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub invoker-api-${Env}
+      StageName: !Ref Env
+      OpenApiVersion: 3.0.1
+
+  InvokerFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: hello_world/
@@ -51,17 +64,15 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+            RestApiId: !Ref InvokerApi
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  InvokerApiUrl:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${InvokerApi}.execute-api.${AWS::Region}.amazonaws.com/${Env}/hello/"
+  InvokerFunctionArn:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt InvokerFunction.Arn
+  InvokerFunctionIamRole:
+    Description: "Lambda Function IAM Role"
+    Value: !GetAtt InvokerFunctionRole.Arn
