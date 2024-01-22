@@ -18,7 +18,7 @@ Parameters:
   SubnetIds:
     Type: String
     Default: ''
-  InvokeeEndpointUrl:
+  InvokeeFunctionArn:
     Type: String
     Default: ''
 
@@ -58,7 +58,8 @@ Resources:
         - !Ref AWS::NoValue
       Environment:
         Variables:
-          INVOKEE_ENDPOINT_URL: !Ref InvokeeEndpointUrl
+          INVOKEE_FUNCTION_ARN: !Ref InvokeeFunctionArn
+          INVOKEE_ENDPOINT_URL: https://7pdbqdkpmdelo4gxvhdln3qasq0iciyd.lambda-url.ap-northeast-1.on.aws/
       Events:
         Index:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -66,6 +67,12 @@ Resources:
             Path: /
             Method: get
             RestApiId: !Ref InvokerApi
+      Policies:
+      - Statement:
+        - Effect: Allow
+          Action:
+          - lambda:InvokeFunction
+          Resource: !Ref InvokeeFunctionArn
 
 Outputs:
   InvokerApiUrl:

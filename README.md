@@ -1,6 +1,6 @@
-# l2l-example
+# r6jan-example
 
-- Lambda から Lambda を呼び出すサンプル
+- Lambda(invoker-app) から Lambda(invokee-app) を呼び出す
 
 ## Environment
 
@@ -42,7 +42,7 @@ sam build
 sam deploy \
   --parameter-overrides SecurityGroupIds=SECURITY_GROUP_IDS \
                         SubnetIds=SUBNET_IDS \
-                        InvokeeEndpointUrl=INVOKEE_ENDPOINT_URL
+                        InvokeeFunctionArn=INVOKEE_FUNCTION_ARN
 ```
 
 **Parameters**
@@ -51,4 +51,4 @@ sam deploy \
 |--|--|--|--|
 |SecurityGroupIds|String|セキュリティグループID<br>複数の場合はカンマ区切り<br>SecurityGroupIdsを指定する場合は。SubnetIdsの指定も必須|-|
 |SubnetIds|String|サブネットID<br>複数の場合はカンマ区切り<br>SubnetIdsを指定する場合は。SecurityGroupIdsの指定も必須|-|
-|InvokeeEndpointUrl|String|invokee-appのエンドポイントURL|-|
+|InvokeeFunctionArn|String|invokee-app(Lambda)のARN|-|
