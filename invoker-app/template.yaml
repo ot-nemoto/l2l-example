@@ -73,6 +73,16 @@ Resources:
           Action:
           - lambda:InvokeFunction
           Resource: !Ref InvokeeFunctionArn
+      Layers:
+      - !Ref InvokerLayer
+
+  InvokerLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Sub invoker-layer-${Env}
+      ContentUri: layer/
+      CompatibleRuntimes:
+      - python3.10
 
 Outputs:
   InvokerApiUrl:
